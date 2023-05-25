@@ -1,8 +1,5 @@
 const postgresqlModel = require('../models/postgresqlModel');
 
-postgresqlModel.connectPgDatabase();
-
-
 module.exports = {
   get: (req, res) => {
     postgresqlModel.combineAllTables((err, result) => {
