@@ -32,5 +32,16 @@ module.exports = {
         res.status(200).send(result);
       }
     });
-  }
+  },
+
+  getRelatedById: (req, res) => {
+    postgresqlModel.getRelatedById(req.params.product_id, (err, result) => {
+      if(err) {
+        console.log(err);
+        res.sendStatus(500);
+      } else {
+        res.status(200).send(result);
+      }
+    });
+  },
 }
