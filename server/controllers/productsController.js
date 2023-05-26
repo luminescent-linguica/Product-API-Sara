@@ -3,7 +3,7 @@ const postgresqlModel = require('../models/postgresqlModel');
 module.exports = {
   getProducts: (req, res) => {
     postgresqlModel.getAllProducts((err, result) => {
-      if(err) {
+      if (err) {
         console.log(err);
         res.sendStatus(500);
       } else {
@@ -14,7 +14,7 @@ module.exports = {
 
   getProductById: (req, res) => {
     postgresqlModel.getProductById(req.params.product_id, (err, result) => {
-      if(err) {
+      if (err) {
         console.log(err);
         res.sendStatus(500);
       } else {
@@ -25,7 +25,7 @@ module.exports = {
 
   getStylesById: (req, res) => {
     postgresqlModel.getStylesById(req.params.product_id, (err, result) => {
-      if(err) {
+      if (err) {
         console.log(err);
         res.sendStatus(500);
       } else {
@@ -36,7 +36,7 @@ module.exports = {
 
   getRelatedById: (req, res) => {
     postgresqlModel.getRelatedById(req.params.product_id, (err, result) => {
-      if(err) {
+      if (err) {
         console.log(err);
         res.sendStatus(500);
       } else {

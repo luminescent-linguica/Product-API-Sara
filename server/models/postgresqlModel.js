@@ -81,7 +81,7 @@ module.exports = {
       const client = await pool.connect();
       const result = await client.query(getRelatedByIdQuery);
       let arr = [];
-      for(let item of result.rows) {
+      for (let item of result.rows) {
         arr.push(item["related_product_id"]);
       }
       callback(null, arr);
