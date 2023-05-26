@@ -11,7 +11,7 @@ module.exports = {
       }
     });
   },
-  //   req.params: { product_id: '333' }
+
   getProductById: (req, res) => {
     postgresqlModel.getProductById(req.params.product_id, (err, result) => {
       if(err) {
