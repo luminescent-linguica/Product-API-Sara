@@ -46,13 +46,11 @@ module.exports = {
       SELECT s.id AS style_id, s.name, s.sale_price, s.original_price::text, s.default_style::boolean AS "default?",
              jsonb_agg(DISTINCT jsonb_build_object('thumbnail_url', ph.thumbnail_url, 'url', ph.url)) AS photos,
              jsonb_object_agg(sk.id, jsonb_build_object('quantity', sk.quantity, 'size', sk.size)) AS skus
-      FROM product p
-      LEFT JOIN styles s ON p.id = s.productId
+      FROM styles s
       LEFT JOIN photos ph ON s.id = ph.styleId
       LEFT JOIN skus sk ON s.id = sk.styleId
-      WHERE p.id = ${id}
-      GROUP BY p.id, s.id
-      ORDER BY s.id;
+      WHERE s.productid = ${id}
+      GROUP BY s.id;
     `;
 
     try {
