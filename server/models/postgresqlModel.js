@@ -1,12 +1,14 @@
 const pool = require('../db/postgresql');
 
 module.exports = {
-  getAllProducts: async (callback) => {
+  getAllProducts: async (page, count, callback) => {
+    const offset = count * (page - 1);
     const getFirstFiveProductQuery = `
       SELECT *, p.default_price::text
       FROM product p
       ORDER BY id
-      LIMIT 5;
+      OFFSET ${offset}
+      LIMIT ${count};
     `;
 
     try {

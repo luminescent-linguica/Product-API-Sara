@@ -2,7 +2,8 @@ const postgresqlModel = require('../models/postgresqlModel');
 
 module.exports = {
   getProducts: (req, res) => {
-    postgresqlModel.getAllProducts((err, result) => {
+    const { page, count } = req.query;
+    postgresqlModel.getAllProducts(Number(page), Number(count), (err, result) => {
       if (err) {
         console.log(err);
         res.sendStatus(500);
