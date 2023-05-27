@@ -31,7 +31,7 @@ describe('GET /products, return all the products( default 5 )', () => {
 
   it('Should return 500 when invalid query is assigned', (done) => {
     request(app)
-      .get('/products?page=1&count=-1')
+      .get('/products?page=1&count=a')
       .expect(500)
       .end((err, res) => {
         if (err) {
