@@ -16,5 +16,5 @@ export default function () {
 
   check(res, { 'success login': (r) => r.status === 200 });
 
-  sleep(0.5);
+  sleep(1);
 }
