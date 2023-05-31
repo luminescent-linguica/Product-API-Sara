@@ -2,10 +2,44 @@ const request = require('supertest');
 const app = require('../server/index.js');
 
 describe('GET /products, return all the products( default 5 )', () => {
-  it('Should return 200', (done) => {
+  it('Should return 200 when no query', (done) => {
     request(app)
       .get('/products')
-      .expect(200, done);
+      .expect(200)
+      .end((err, res) => {
+        if (err) {
+          done(err);
+        } else {
+          done();
+        }
+      });
+  });
+
+  it('Should return 200 when query is assigned', (done) => {
+    request(app)
+      .get('/products?page=2&count=10')
+      .expect(200)
+      .end((err, res) => {
+        if (err) {
+          done(err);
+        } else {
+          done();
+        }
+      });
+  });
+
+
+  it('Should return 500 when invalid query is assigned', (done) => {
+    request(app)
+      .get('/products?page=1&count=a')
+      .expect(500)
+      .end((err, res) => {
+        if (err) {
+          done(err);
+        } else {
+          done();
+        }
+      });
   });
 
   it('Should get a products array with length of 5 by defalut', () => request(app)
@@ -23,7 +57,7 @@ describe('GET products/333, return the specified product which product_id is 333
   });
 
   it('Invalid format product_id should return 500', (done) => {
-    jest.spyOn(console, 'log').mockImplementation(() => {});
+    jest.spyOn(console, 'log').mockImplementation(() => { });
     request(app)
       .get('/products/a')
       .expect(500, () => {
@@ -47,7 +81,7 @@ describe('GET /products/12345, return all the styles of product which product_id
   });
 
   it('Invalid format product_id should return 500', (done) => {
-    jest.spyOn(console, 'log').mockImplementation(() => {});
+    jest.spyOn(console, 'log').mockImplementation(() => { });
     request(app)
       .get('/products/a/styles')
       .expect(500, () => {
@@ -78,7 +112,7 @@ describe('GET /products/8888/related, return all the related product_id of produ
   });
 
   it('Invalid format product_id should return 500', (done) => {
-    jest.spyOn(console, 'log').mockImplementation(() => {});
+    jest.spyOn(console, 'log').mockImplementation(() => { });
     request(app)
       .get('/products/a/related')
       .expect(500, () => {

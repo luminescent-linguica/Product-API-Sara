@@ -1,17 +1,18 @@
 const pool = require('../db/postgresql');
 
 module.exports = {
-  getAllProducts: async (callback) => {
-    const getFirstFiveProductQuery = `
+  getAllProducts: async (page, count, callback) => {
+    const getProductsQuery = `
       SELECT *, p.default_price::text
       FROM product p
+      WHERE id > $1
       ORDER BY id
-      LIMIT 5;
+      LIMIT $2;
     `;
 
     try {
       const client = await pool.connect();
-      const result = await client.query(getFirstFiveProductQuery);
+      const result = await client.query(getProductsQuery, [count * (page - 1), count]);
       callback(null, result);
       client.release();
     } catch (err) {
@@ -26,13 +27,13 @@ module.exports = {
              jsonb_agg(jsonb_build_object('feature', f.feature, 'value', f.value)) AS features
       FROM product p
       LEFT JOIN feature f ON p.id = f.product_id
-      WHERE p.id = ${id}
+      WHERE p.id = $1
       GROUP BY p.id;
     `;
 
     try {
       const client = await pool.connect();
-      const result = await client.query(getProductByIdQuery);
+      const result = await client.query(getProductByIdQuery, [id]);
       callback(null, result);
       client.release();
     } catch (err) {
@@ -49,13 +50,13 @@ module.exports = {
       FROM styles s
       LEFT JOIN photos ph ON s.id = ph.styleId
       LEFT JOIN skus sk ON s.id = sk.styleId
-      WHERE s.productid = ${id}
+      WHERE s.productid = $1
       GROUP BY s.id;
     `;
 
     try {
       const client = await pool.connect();
-      const result = await client.query(getStylesByIdQuery);
+      const result = await client.query(getStylesByIdQuery, [id]);
       const obj = {};
       obj['product_id'] = id;
       obj['results'] = result.rows;
@@ -71,13 +72,13 @@ module.exports = {
     const getRelatedByIdQuery = `
       SELECT r.related_product_id
       FROM related r
-      WHERE r.current_product_id = ${id}
+      WHERE r.current_product_id = $1
       ORDER BY r.id;
     `;
 
     try {
       const client = await pool.connect();
-      const result = await client.query(getRelatedByIdQuery);
+      const result = await client.query(getRelatedByIdQuery, [id]);
       let arr = [];
       for (let item of result.rows) {
         arr.push(item["related_product_id"]);
