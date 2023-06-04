@@ -15,4 +15,8 @@ router.get('/products/:product_id/styles', productsController.getStylesById);
 // Returns the id's of products related to the product specified
 router.get('/products/:product_id/related', productsController.getRelatedById);
 
+router.get('/loaderio-116616626e02abdaf5217b302ecf7b54', (req, res) => {
+  res.send('loaderio-116616626e02abdaf5217b302ecf7b54');
+})
+
 module.exports = router;

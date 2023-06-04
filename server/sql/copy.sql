@@ -15,10 +15,3 @@ FROM '/Users/sara/RFP2303/Products-API/data/photos.csv' DELIMITER ',' CSV HEADER
 
 COPY skus(id,styleId,size,quantity)
 FROM '/Users/sara/RFP2303/Products-API/data/skus.csv' DELIMITER ',' CSV HEADER;
-
-CREATE INDEX idx_product_id ON product (id);
-CREATE INDEX idx_related_current_product_id ON related (current_product_id);
-CREATE INDEX idx_feature_product_id ON feature (product_id);
-CREATE INDEX idx_styles_productid ON styles (productId);
-CREATE INDEX idx_photos_styleId ON photos (styleId);
-CREATE INDEX idx_skus_styleId ON skus (styleId);

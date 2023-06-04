@@ -1,0 +1,9 @@
+FROM postgres:14
+
+ENV POSTGRES_USER=sara
+ENV POSTGRES_PASSWORD=password
+ENV POSTGRES_DB=pgdb
+
+COPY backup.sql /docker-entrypoint-initdb.d/
+
+EXPOSE 5432

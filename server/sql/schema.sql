@@ -51,3 +51,10 @@ CREATE TABLE IF NOT EXISTS product (
    quantity INT,
    FOREIGN KEY (styleId) REFERENCES styles(id)
  );
+
+CREATE INDEX idx_product_id ON product (id);
+CREATE INDEX idx_related_current_product_id ON related (current_product_id);
+CREATE INDEX idx_feature_product_id ON feature (product_id);
+CREATE INDEX idx_styles_productid ON styles (productId);
+CREATE INDEX idx_photos_styleId ON photos (styleId);
+CREATE INDEX idx_skus_styleId ON skus (styleId);
